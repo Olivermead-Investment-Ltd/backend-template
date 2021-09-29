@@ -12,7 +12,6 @@ const run = (command) => {
 };
 
 const repoName = process.argv[2];
-const setupDB = `cd ${repoName} && yarn sequelize-cli init`;
 const installDependencies = `cd ${repoName} && yarn install`;
 const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
 
@@ -24,8 +23,8 @@ console.log(`Installing dependencies into ${repoName}`);
 let installDeps = run(installDependencies);
 if (!installDeps) process.exit(-1);
 
+// const setupDB = `cd ${repoName} && yarn sequelize-cli init`;
 // console.log(`Setting up modules for ${repoName}`);
-
 // const dbSetup = run(setupDB);
 // if (!dbSetup) process.exit(-1);
 

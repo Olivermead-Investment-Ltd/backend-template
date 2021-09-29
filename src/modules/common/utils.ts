@@ -22,23 +22,6 @@ export const success = (msg: string, data: any, meta?: object) => ({
   ...(meta && { meta }),
 });
 
-export const isStaffAccount =
-  (roles: string[] = ['super admin', 'admin', 'staff user', 'recovery']) =>
-  (req: FullRequest, _res: Response, next: NextFunction) => {
-    try {
-      // @ts-ignore
-      const { role } = req.user;
-
-      if (roles.includes(role)) {
-        return next();
-      }
-
-      throw createError('You do not have access to this resource', 403);
-    } catch (e) {
-      return next(e);
-    }
-  };
-
 export async function Authenticate(req: FullRequest, res: Response, next: NextFunction) {
   try {
     if (req.user) {

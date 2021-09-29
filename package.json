@@ -1,12 +1,12 @@
 {
   "name": "create-backend-template",
   "version": "1.0.2",
-  "description": "Arvo finance payment service",
+  "description": "Backend temlate for nodeJS projects",
   "main": "index.js",
   "bin": "./bin/cli.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Olivermead-Investment-Ltd/backend-template"
+    "url": ""
   },
   "author": "Kilson David",
   "license": "MIT",
