@@ -12,9 +12,9 @@ const run = (command) => {
 };
 
 const repoName = process.argv[2];
-const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
-const installDependencies = `cd ${repoName} && yarn install`;
 const setupDB = `cd ${repoName} && yarn sequelize-cli init`;
+const installDependencies = `cd ${repoName} && yarn install`;
+const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
 
 console.log(`Cloning arvo backend template`);
 const checkout = run(gitCheckoutCMD);
@@ -24,10 +24,10 @@ console.log(`Installing dependencies into ${repoName}`);
 let installDeps = run(installDependencies);
 if (!installDeps) process.exit(-1);
 
-console.log(`Setting up modules for ${repoName}`);
+// console.log(`Setting up modules for ${repoName}`);
 
-const dbSetup = run(setupDB);
-if (!dbSetup) process.exit(-1);
+// const dbSetup = run(setupDB);
+// if (!dbSetup) process.exit(-1);
 
-console.log('Setup complete! Happy coding! \n Set up your .env and run the following commands');
+console.log('Setup complete! Happy coding! \nSet up your .env and run the following commands');
 console.log(`cd ${repoName} && yarn dev`);
