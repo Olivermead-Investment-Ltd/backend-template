@@ -1,4 +1,4 @@
-# Welcome to Arvo payment service
+# Welcome to Arvo Backend project template
 
 ## Get started
 
