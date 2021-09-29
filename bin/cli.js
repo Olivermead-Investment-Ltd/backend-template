@@ -13,7 +13,7 @@ const run = (command) => {
 
 const repoName = process.argv[2];
 const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
-const installDependencies = `cd ${repoName} && yarn insall`;
+const installDependencies = `cd ${repoName} && yarn install`;
 const setupDB = `yarn sequelize-cli init`;
 
 console.log(`Cloning arvo backend template`);
