@@ -1,8 +1,9 @@
 {
-  "name": "create-arvo-backend",
+  "name": "create-backend-template",
   "version": "1.0.0",
   "description": "Arvo finance payment service",
   "main": "index.js",
+  "bin": "./bin/cli.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Olivermead-Investment-Ltd/backend-template"
