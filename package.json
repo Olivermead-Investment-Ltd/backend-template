@@ -1,6 +1,6 @@
 {
   "name": "create-backend-template",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Backend temlate for nodeJS projects",
   "main": "index.js",
   "bin": "./bin/cli.js",
