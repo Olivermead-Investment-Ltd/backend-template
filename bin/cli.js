@@ -22,7 +22,7 @@ const run = (command) => {
 const repoName = process.argv[2];
 
 // Clone Repository
-const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
+const gitCheckoutCMD = `git clone --depth 1 https://github.com/Kwaysi/backend-template.git ${repoName}`;
 console.log(`Cloning arvo backend template`);
 const checkout = run(gitCheckoutCMD);
 if (!checkout) process.exit(-1);
@@ -51,7 +51,16 @@ console.log('Create .env file for you.');
 const createEnv = run(envCMD);
 if (!createEnv) process.exit(-1);
 
+// Initialize git 
+const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit && git remote rm upstream`;
+console.log('Initializing git....');
+const initGit = run(gitCMD);
+if (!initGit) process.exit(-1);
+
+
 console.log('Setup complete!');
+console.log('Set you git upstream repo by running');
+console.log('\ngit remote set-url origin {newGitURL}\n')
 console.log('Set up your .env and run the following commands to get started');
 console.log(`\ncd ${repoName} && yarn dev\n`);
 console.log('Happy coding!');
