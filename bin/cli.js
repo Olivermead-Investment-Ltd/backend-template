@@ -22,7 +22,7 @@ const run = (command) => {
 const repoName = process.argv[2];
 
 // Clone Repository
-const gitCheckoutCMD = `git clone --depth 1 https://github.com/Olivermead-Investment-Ltd/backend-template.git ${repoName}`;
+const gitCheckoutCMD = `git clone --depth 1 https://github.com/Kwaysi/backend-template.git ${repoName}`;
 console.log(`Cloning arvo backend template`);
 const checkout = run(gitCheckoutCMD);
 if (!checkout) process.exit(-1);
