@@ -52,7 +52,7 @@ const createEnv = run(envCMD);
 if (!createEnv) process.exit(-1);
 
 // Initialize git 
-const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit" && git remote rm upstream`;
+const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit" && git remote rm origin`;
 console.log('Initializing git....');
 const initGit = run(gitCMD);
 if (!initGit) process.exit(-1);
