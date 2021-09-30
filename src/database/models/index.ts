@@ -1,12 +1,13 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 import dbconfig from '../config/config';
+import UserModel from './userSample';
 
 const { NODE_ENV = 'development' } = process.env;
 
 const config = dbconfig[NODE_ENV];
 
-let sequelize;
+let sequelize: Sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
@@ -16,9 +17,9 @@ if (config.use_env_variable) {
 const db = {
   sequelize,
   Sequelize,
-  // Add models here. 
-  // Doing this manually to enable auto complete 
-  // e.g cards: cards(sequelize, DataTypes),
+  // Add models here e.g cards: cards(sequelize)
+  // Doing this manually to enable auto complete when destructuring
+  user: UserModel(sequelize),
 };
 
 Object.keys(db).forEach((modelName) => {

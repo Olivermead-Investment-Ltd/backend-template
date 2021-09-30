@@ -1,26 +1,25 @@
 import { Request } from 'express';
+import { ModelCtor } from 'sequelize';
 
-type Customer = {
-  id: string;
-  lga: string;
-  title: string;
+interface User {
+  id?: string;
+  name: string;
   email: string;
-  state: string;
-  gender: string;
-  country: string;
-  zipCode: string;
-  lastName: string;
-  firstName: string;
-  telephone: string;
-  createdAt: string;
-  updatedAt: string;
-  homeAddress: string;
+  phone: string;
+  password: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+}
+
+type Models = {
+  [key: string]: ModelCtor<any>;
 };
 
 type CreateErr = (message: string, code?: number, validations?: object) => Error;
 
-type FullRequest = Request & {
-  user: Customer;
+type AuthenticatedRequest = Request & {
+  user: User;
   destination?: {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
     url: string;

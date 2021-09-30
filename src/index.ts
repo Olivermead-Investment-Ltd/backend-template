@@ -1,6 +1,7 @@
 import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
+import compression from 'compression';
 // import { Server } from 'socket.io';
 import * as Sentry from '@sentry/node';
 import express, { Request } from 'express';
@@ -13,34 +14,39 @@ import { errorHandler } from './modules/common/utils';
 config();
 
 const app = express();
+const { sequelize } = db;
 // const io = new Server();
 const { PORT, SENTRY_DSN, NODE_ENV } = process.env;
 
-Sentry.init({
-  dsn: SENTRY_DSN,
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Tracing.Integrations.Express({ app }),
-  ],
-  environment: NODE_ENV,
-  tracesSampleRate: 1.0,
-});
-
 // Middlewares
 app.use(helmet());
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
-app.use((req: Request, _res, next) => {
-  // @ts-ignore
-  if (!req.transaction) {
+app.use(compression());
+
+if (SENTRY_DSN) {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Tracing.Integrations.Express({ app }),
+    ],
+    environment: NODE_ENV,
+    tracesSampleRate: 1.0,
+  });
+
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+  app.use((req: Request, _res, next) => {
     // @ts-ignore
-    req.transaction = Sentry.startTransaction({
-      op: 'test',
-      name: 'My First Test Transaction',
-    });
-  }
-  next();
-});
+    if (!req.transaction) {
+      // @ts-ignore
+      req.transaction = Sentry.startTransaction({
+        op: 'test',
+        name: 'My First Test Transaction',
+      });
+    }
+    next();
+  });
+}
 
 app.use(
   cors({
@@ -64,15 +70,13 @@ app.use(errorHandler);
 export default app;
 
 // Start the server
-db.sequelize
-  .sync()
+sequelize
+  .authenticate()
   .then(() => {
-    if (NODE_ENV !== 'test') {
-      console.log(`Environment is ${NODE_ENV}`);
-      console.log(`Connected to database: ${process.env.DB_NAME}`);
-      app.listen(PORT, () => {
-        console.log(`Server started on port: ${PORT}`);
-      });
-    }
+    console.log(`Environment is ${NODE_ENV}`);
+    console.log(`Connected to database: ${process.env.DB_NAME}`);
+    app.listen(PORT, () => {
+      console.log(`Server started on port: ${PORT}`);
+    });
   })
-  .catch((err) => console.log(err));
+  .catch((e) => console.log('Failed to connect to database:', e.message));

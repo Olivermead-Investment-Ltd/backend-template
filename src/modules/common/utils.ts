@@ -4,7 +4,7 @@ import { captureException } from '@sentry/node';
 import { NextFunction, Response } from 'express';
 import { validationResult } from 'express-validator';
 
-import { AppError, CreateErr, Customer, FullRequest } from '../../types';
+import { AppError, CreateErr, User, AuthenticatedRequest } from '../../types';
 
 export const createError: CreateErr = (message, code = 403, validations = null) => {
   const err = new Error(message);
@@ -22,7 +22,7 @@ export const success = (msg: string, data: any, meta?: object) => ({
   ...(meta && { meta }),
 });
 
-export async function Authenticate(req: FullRequest, res: Response, next: NextFunction) {
+export async function Authenticate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     if (req.user) {
       return next();
@@ -36,7 +36,7 @@ export async function Authenticate(req: FullRequest, res: Response, next: NextFu
     }
 
     // @ts-ignore
-    const user: Customer = jwt.verify(token, process.env.AUTH_SECRET);
+    const user: User = jwt.verify(token, process.env.AUTH_SECRET);
     req.user = user;
     return next();
   } catch (e) {
@@ -69,7 +69,7 @@ export function errorHandler(error: AppError, req: any, res: Response, _next: an
       }
     }
 
-    console.log(error);
+    console.log(error.name || 'Error', error.message);
 
     captureException(error);
     req.transaction.finish();
@@ -80,13 +80,13 @@ export function errorHandler(error: AppError, req: any, res: Response, _next: an
   }
 }
 
-export const forwardRequest = (req: FullRequest, res: Response, next: NextFunction) => {
+export const forwardRequest = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const { app } = req;
   // eslint-disable-next-line no-underscore-dangle
   return app._router.handle(req, res, next);
 };
 
-export const validate = (req: FullRequest, _res: Response, next: NextFunction) => {
+export const validate = (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
 
