@@ -9,6 +9,9 @@ provides some scripts to get up and running easily.
 Make sure you have yarn and at least node 12 instaled
 
 ## Get started
+First of all run
+`npx create-backend-template {projectName}`
+to bootstrap your project
 
 A .env file will be created for you by default, edit it with your basic info then run:
 
