@@ -31,13 +31,17 @@ if (!checkout) process.exit(-1);
 const installDependencies = `cd ${repoName} && yarn install && yarn global add nodemon typescript tsc ts-node`;
 console.log(`Installing dependencies into ${repoName}`);
 let installDeps = run(installDependencies);
-if (!installDeps) process.exit(-1);
-
-// Initialize migration and seeders folder
-const setupDB = `cd ${repoName} && yarn sequelize-cli init:migrations && yarn sequelize-cli init:seeders`;
-console.log(`Setting up modules for ${repoName}`);
-const dbSetup = run(setupDB);
-if (!dbSetup) process.exit(-1);
+if (!installDeps) {
+  console.log('\n\nFailed to install dependencies');
+  console.log('\n\nPlease run: yarn install && yarn global add nodemon typescript tsc ts-node ');
+  console.log('After the setup is done\n\n');
+} else {
+  // Initialize migration and seeders folder
+  const setupDB = `cd ${repoName} && yarn sequelize-cli init:migrations && yarn sequelize-cli init:seeders`;
+  console.log(`Setting up modules for ${repoName}`);
+  run(setupDB);
+  // if (!dbSetup) process.exit(-1);
+}
 
 // Delete bin folder from project
 const deleteBin = `cd ${repoName} && rm -rf bin`;
@@ -51,16 +55,15 @@ console.log('Create .env file for you.');
 const createEnv = run(envCMD);
 if (!createEnv) process.exit(-1);
 
-// Initialize git 
+// Initialize git
 const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit" && git remote rm origin`;
 console.log('Initializing git....');
 const initGit = run(gitCMD);
 if (!initGit) process.exit(-1);
 
-
 console.log('Setup complete!');
 console.log('Set you git upstream repo by running');
-console.log('\ngit remote set-url origin {newGitURL}\n')
+console.log('\ngit remote set-url origin {newGitURL}\n');
 console.log('Set up your .env and run the following commands to get started');
 console.log(`\ncd ${repoName} && yarn dev\n`);
 console.log('Happy coding!');
