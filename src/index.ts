@@ -9,6 +9,7 @@ import * as Tracing from '@sentry/tracing';
 
 import routes from './routes';
 import db from './database/models';
+import  rateLimit from 'express-rate-limit';
 import { errorHandler } from './modules/common/utils';
 
 config();
@@ -17,10 +18,16 @@ const app = express();
 const { sequelize } = db;
 // const io = new Server();
 const { PORT, SENTRY_DSN, NODE_ENV } = process.env;
+const apiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many request from this IP, please try again after 10 minutes'
+});
 
 // Middlewares
 app.use(helmet());
 app.use(compression());
+
 
 if (SENTRY_DSN) {
   Sentry.init({
@@ -61,7 +68,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.json({ limit: '10mb' }));
 app.disable('x-powered-by');
 
-app.use('/', routes);
+app.use('/', apiLimiter, routes);
 
 // Error handlers
 app.use(Sentry.Handlers.errorHandler());
