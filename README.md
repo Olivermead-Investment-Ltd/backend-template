@@ -101,6 +101,7 @@ The following dependencies are installed along with the project.
 - sequelize
 - sequelize-cli
 - swagger-ui-express-
+- express-rate-limit
 
 ## Dev dependencies
 
