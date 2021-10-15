@@ -14,3 +14,4 @@ Dockerfile
 workspace.code-workspace
 
 *.Identifier
+.npmignore
