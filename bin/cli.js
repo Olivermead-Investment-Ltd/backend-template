@@ -8,6 +8,8 @@
 
 const { execSync } = require('child_process');
 
+const isWin = process.platform === 'win32';
+
 // Run shell scripts synchronously to catch errors
 const run = (command) => {
   try {
@@ -33,7 +35,9 @@ console.log(`Installing dependencies into ${repoName}`);
 let installDeps = run(installDependencies);
 if (!installDeps) {
   console.log('\n\nFailed to install dependencies');
-  console.log('\n\nPlease run: yarn install && yarn global add nodemon typescript tsc ts-node ');
+  console.log(
+    '\n\nPlease run: yarn install && yarn global add nodemon typescript tsc ts-node '
+  );
   console.log('After the setup is done\n\n');
 } else {
   // Initialize migration and seeders folder
@@ -43,20 +47,20 @@ if (!installDeps) {
   // if (!dbSetup) process.exit(-1);
 }
 
-// Delete bin folder from project
-const deleteBin = `cd ${repoName} && rm -rf bin`;
-console.log(`Removing setup dependencies for ${repoName}`);
-const deleteBinComplete = run(deleteBin);
-if (!deleteBinComplete) process.exit(-1);
+// Delete folders from project
+const deleteFolders = `cd ${repoName} && ${isWin ? 'rd /s /q bin && rd /s /q .git' : 'rm -rf bin && rm -rf .git'}`;
+console.log(`Removing folders for ${repoName}`);
+const deleteComplete = run(deleteFolders);
+if (!deleteComplete) process.exit(-1);
 
 // Initialize .env file
-const envCMD = `cd ${repoName} && cp .env.sample .env`;
+const envCMD = `cd ${repoName} &&${isWin ? 'copy .env.sample .env' : 'cp .env.sample .env'}`;
 console.log('Create .env file for you.');
 const createEnv = run(envCMD);
 if (!createEnv) process.exit(-1);
 
 // Initialize git
-const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit" && git remote rm origin`;
+const gitCMD = `cd ${repoName} && git init && git add . && git commit -m "Initial commit"`;
 console.log('Initializing git....');
 const initGit = run(gitCMD);
 if (!initGit) process.exit(-1);

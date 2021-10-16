@@ -4,6 +4,8 @@ This projects is an opinionanted way to bootstrap express API projects. It creat
 structure, sets up typescript, installs common (essential) dependencies, sets up linting and
 provides some scripts to get up and running easily.
 
+This template is fully compatible with windows now.
+
 (Hopefully it's simple and beginner friendly :) );
 
 Make sure you have yarn and at least node 12 instaled
@@ -100,25 +102,21 @@ The following dependencies are installed along with the project.
 - pg-hstore
 - sequelize
 - sequelize-cli
-- swagger-ui-express-
+- swagger-ui-express
+- express-rate-limit
 
 ## Dev dependencies
 
-- axios
-- compression
-- cors
-- date-fns
-- dotenv
-- express
-- express-validator
-- helmet
-- jsonwebtoken
-- nanoid
-- pg
-- pg-hstore
-- sequelize
-- sequelize-cli
-- swagger-ui-express-
+- @types/compression
+- @types/cors 
+- @types/express
+- @types/express-rate-limit
+- @types/jsonwebtoken
+- @types/sequelize
+- eslint
+- eslint-config-airbnb-typescript
+- eslint-plugin-import
+- typescript
 
 ## Contributing
 Feel free to fork, open PRs and report issues. Any kind of feedback is appreciated.
