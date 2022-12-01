@@ -1,20 +1,22 @@
 {
-  "compilerOptions": {
-    "target": "es2019",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "module": "CommonJS",
-    "outDir": "build",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve"
-  },
-  "include": ["src/**/*.ts", "src/modules/cards"],
-  "exclude": ["node_modules", "build"]
+	"files": ["./src/index.ts"],
+	"compilerOptions": {
+		"baseUrl": "./",
+		"allowJs": true,
+		"strict": false,
+		"outDir": "build",
+		"target": "ESNext",
+		"module": "ESNext",
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+		"moduleResolution": "node",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"forceConsistentCasingInFileNames": true
+	},
+	"ts-node": {
+		"esm": true
+	},
+	"exclude": ["node_modules", "build"]
 }

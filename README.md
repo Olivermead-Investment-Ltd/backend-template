@@ -80,6 +80,10 @@ This runs all the necessary commands to create a deployment.
 
 `yarn deploy`
 
+### Install private packages from other registries
+
+Simply edit the .npm rc file and add the registry you want to use.
+
 ## Documenting
 Swagger is already set up and ready to use. Just include you docs under paths in src/swagger.ts
 Once done, hit /docs in your browser to see your swagger docs.
